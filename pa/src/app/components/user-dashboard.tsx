@@ -179,7 +179,19 @@ export default function UserDashboard() {
               />
             </div>
 
-            <Select value={statusFilter} onValueChange={setStatusFilter}>
+            <Select
+              value={statusFilter}
+              onValueChange={(val) => {
+                if (
+                  val === "all" ||
+                  val === "ativo" ||
+                  val === "credenciamento" ||
+                  val === "suspenso"
+                ) {
+                  setStatusFilter(val);
+                }
+              }}
+            >
               <SelectTrigger className="w-full lg:w-[200px]">
                 <Filter className="size-4 mr-2" />
                 <SelectValue placeholder="Status" />
@@ -192,7 +204,14 @@ export default function UserDashboard() {
               </SelectContent>
             </Select>
 
-            <Select value={sortBy} onValueChange={setSortBy}>
+            <Select
+              value={sortBy}
+              onValueChange={(val) => {
+                if (val === "nome" || val === "status" || val === "prazo") {
+                  setSortBy(val);
+                }
+              }}
+            >
               <SelectTrigger className="w-full lg:w-[180px]">
                 <ArrowUpDown className="size-4 mr-2" />
                 <SelectValue placeholder="Ordenar" />
