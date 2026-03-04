@@ -13,7 +13,7 @@ import {
 } from "../ui/select";
 import { Search, Filter, LayoutGrid, List, ArrowUpDown, Building2, LogOut } from "lucide-react";
 import { Badge } from "../ui/badge";
-import { db } from "../../lib/firebaseClient";
+import { db } from "../../../lib/firebaseClient";
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { useAuth } from "../../context/AuthContext";
 import { normalizeDigits } from "../../utils";
