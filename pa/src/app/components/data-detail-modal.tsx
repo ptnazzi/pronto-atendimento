@@ -22,6 +22,7 @@ import {
 import { DataItem } from "./data-card";
 import { Button } from "./ui/button";
 import { Separator } from "./ui/separator";
+import { STATUS_COLORS, STATUS_LABELS, DEFAULT_PORTAL_PASSWORD } from "../constants";
 
 interface DataDetailModalProps {
   item: DataItem | null;
@@ -31,18 +32,6 @@ interface DataDetailModalProps {
 
 export function DataDetailModal({ item, open, onClose }: DataDetailModalProps) {
   if (!item) return null;
-
-  const statusColors = {
-    ativo: "bg-green-500/10 text-green-700 border-green-500/20",
-    suspenso: "bg-red-500/10 text-red-700 border-red-500/20",
-    credenciamento: "bg-yellow-500/10 text-yellow-700 border-yellow-500/20",
-  };
-
-  const statusLabels = {
-    ativo: "Ativo",
-    suspenso: "Suspenso",
-    credenciamento: "Em Credenciamento",
-  };
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
@@ -55,8 +44,8 @@ export function DataDetailModal({ item, open, onClose }: DataDetailModalProps) {
                 CNPJ: {item.cnpj}
               </DialogDescription>
             </div>
-            <Badge className={statusColors[item.status]}>
-              {statusLabels[item.status]}
+            <Badge className={STATUS_COLORS[item.status]}>
+              {STATUS_LABELS[item.status]}
             </Badge>
           </div>
         </DialogHeader>
@@ -128,7 +117,7 @@ export function DataDetailModal({ item, open, onClose }: DataDetailModalProps) {
                     <div>
                       <p className="text-xs text-gray-600 mb-1">Senha</p>
                       <p className="font-mono font-medium bg-white px-3 py-2 rounded border">
-                        {item.senhaPortal || "Ipo132*"}
+                        {item.senhaPortal || DEFAULT_PORTAL_PASSWORD}
                       </p>
                     </div>
                   </div>

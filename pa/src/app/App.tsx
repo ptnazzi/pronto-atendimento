@@ -12,13 +12,11 @@ import {
 } from "./components/ui/select";
 import { Search, Filter, LayoutGrid, List, ArrowUpDown, Building2 } from "lucide-react";
 import { Badge } from "./components/ui/badge";
-import { supabase } from "./lib/supabaseClient";
+import { supabase } from "../lib/supabaseClient";
+import LoginScreen from "./components/login";
+import { normalizeDigits } from "./utils";
 
 export default function App() {
-  function normalizeDigits(s?: string) {
-    return (s ?? "").replace(/\D/g, "");
-  }
-
   const [data, setData] = useState<DataItem[]>([]);
   const [loadingData, setLoadingData] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
@@ -26,8 +24,17 @@ export default function App() {
   const [sortBy, setSortBy] = useState<"nome" | "status" | "prazo">("nome");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [selectedItem, setSelectedItem] = useState<DataItem | null>(null);
+  const [user, setUser] = useState<any | null>(null);
 
   useEffect(() => {
+    let mounted = true;
+    supabase.auth.getSession().then(({ data }) => {
+      if (!mounted) return;
+      setUser(data.session?.user ?? null);
+    });
+    const { data: listener } = supabase.auth.onAuthStateChange((_, session) => {
+      setUser(session?.user ?? null);
+    });
     async function load() {
       setLoadingData(true);
       try {
@@ -67,6 +74,15 @@ export default function App() {
     }
 
     load();
+
+    return () => {
+      mounted = false;
+      try {
+        listener?.subscription?.unsubscribe();
+      } catch (e) {
+        // ignore
+      }
+    };
   }, []);
 
   // Filtrar e ordenar dados (busca normalizada para CNPJ/telefone)
@@ -119,6 +135,10 @@ export default function App() {
         <p className="text-gray-600">Carregando convênios...</p>
       </div>
     );
+  }
+
+  if (!user) {
+    return <LoginScreen onSuccess={() => supabase.auth.getSession().then(({ data }) => setUser(data.session?.user ?? null))} />;
   }
 
   return (

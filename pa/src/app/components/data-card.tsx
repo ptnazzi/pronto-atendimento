@@ -1,6 +1,7 @@
 import { Card } from "./ui/card";
 import { Badge } from "./ui/badge";
-import { Phone, Mail, Clock, Shield, Key, FileText } from "lucide-react";
+import { Phone, Mail, Clock, Shield, Key } from "lucide-react";
+import { STATUS_COLORS, STATUS_LABELS } from "../constants";
 
 export interface DataItem {
   id: string;
@@ -27,18 +28,6 @@ interface DataCardProps {
 }
 
 export function DataCard({ item, onClick }: DataCardProps) {
-  const statusColors = {
-    ativo: "bg-green-500/10 text-green-700 border-green-500/20",
-    suspenso: "bg-red-500/10 text-red-700 border-red-500/20",
-    credenciamento: "bg-yellow-500/10 text-yellow-700 border-yellow-500/20",
-  };
-
-  const statusLabels = {
-    ativo: "Ativo",
-    suspenso: "Suspenso",
-    credenciamento: "Em Credenciamento",
-  };
-
   return (
     <Card
       className="p-6 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-blue-200"
@@ -58,8 +47,8 @@ export function DataCard({ item, onClick }: DataCardProps) {
             <h3 className="font-semibold text-lg truncate">{item.nomeConvenio}</h3>
             <p className="text-sm text-gray-600 mt-1">CNPJ: {item.cnpj}</p>
           </div>
-          <Badge className={statusColors[item.status]}>
-            {statusLabels[item.status]}
+          <Badge className={STATUS_COLORS[item.status]}>
+            {STATUS_LABELS[item.status]}
           </Badge>
         </div>
 
