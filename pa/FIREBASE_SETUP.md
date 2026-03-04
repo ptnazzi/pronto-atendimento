@@ -149,6 +149,8 @@ npm run dev
    - Usuario: `user@email.com` / `password123`
    - Admin: `admin@email.com` / `admin123`
 
+> Para facilitar, o painel de admin agora tem um botão **"Popular Exemplo"** que insere automaticamente dois convênios de demonstração no banco. Faça login como admin e clique nele; os registros aparecerão imediatamente no painel e no console do Firebase.
+
 ---
 
 ## 📝 Próximos Passos

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../../lib/firebaseClient";
-import { collection, getDocs, deleteDoc, doc, query, orderBy } from "firebase/firestore";
+import { collection, getDocs, deleteDoc, doc, query, orderBy, addDoc } from "firebase/firestore";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 import { Input } from "./ui/input";
@@ -60,6 +60,60 @@ export default function AdminDashboard() {
       console.error("Erro ao carregar convênios:", err);
     } finally {
       setLoading(false);
+    }
+  }
+
+  // preenche convenios de exemplo diretamente no Firestore
+  async function seedExamples() {
+    const examples: Partial<DataItem>[] = [
+      {
+        nomeConvenio: "Hospital São Paulo",
+        cnpj: "12.345.678/0001-01",
+        status: "ativo",
+        telefone: "(11) 1234-5678",
+        email: "contato@hsp.com.br",
+        usuarioPortal: "hspuser",
+        senhaPortal: "senha123",
+        tiposAtendimento: ["Emergência", "Cirurgia"],
+        prazoAutorizacao: "48h",
+        documentosNecessarios: ["RG", "CPF"],
+        regras: ["Apresentar cartão"],
+        contatoComercial: "comercial@hsp.com.br",
+        contatoAutorizacao: "autorizacao@hsp.com.br",
+        observacoes: "Nenhuma",
+        linkPortal: "https://portal.hsp.com.br",
+      },
+      {
+        nomeConvenio: "Clínica Alfa",
+        cnpj: "98.765.432/0001-99",
+        status: "credenciamento",
+        telefone: "(21) 8765-4321",
+        email: "contato@clinalfa.com",
+        usuarioPortal: "alfaclin",
+        senhaPortal: "alfasenha",
+        tiposAtendimento: ["Consulta"],
+        prazoAutorizacao: "24h",
+        documentosNecessarios: ["Cartão SUS"],
+        regras: ["Agendar com antecedência"],
+        contatoComercial: "vend@clinalfa.com",
+        contatoAutorizacao: "aut@clinalfa.com",
+        observacoes: "Horário reduzido aos fins de semana",
+        linkPortal: "https://portal.clinalfa.com",
+      },
+    ];
+
+    try {
+      for (const item of examples) {
+        await addDoc(collection(db, "convenios"), {
+          ...item,
+          createdAt: new Date().toISOString(),
+        });
+      }
+      alert("Dados de exemplo adicionados com sucesso.");
+      loadConvenios();
+    } catch (err) {
+      console.error("Erro ao popular dados de exemplo:", err);
+      alert("Falha ao adicionar exemplos");
     }
   }
 
@@ -133,6 +187,13 @@ export default function AdminDashboard() {
             >
               <Plus className="size-4 mr-2" />
               Novo Convênio
+            </Button>
+            {/* botão para popular exemplos */}
+            <Button
+              onClick={seedExamples}
+              className="bg-yellow-600 hover:bg-yellow-700"
+            >
+              Popular Exemplo
             </Button>
           </div>
         </div>
