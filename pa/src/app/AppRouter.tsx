@@ -1,9 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import UserLoginScreen from "./components/user-login";
-import AdminLoginScreen from "./components/admin-login";
-import UserDashboard from "./components/user-dashboard";
-import AdminDashboard from "./components/admin-dashboard";
-import ConvenioForm from "./components/convenio-form";
+import { UserLogin as UserLoginScreen } from "./components/user";
+import { AdminLogin as AdminLoginScreen } from "./components/admin";
+import { UserDashboard } from "./components/user";
+import { AdminDashboard } from "./components/admin";
+import { ConvenioForm } from "./components/admin";
 import { AuthProvider } from "./context/AuthContext";
 import { useParams } from "react-router-dom";
 
