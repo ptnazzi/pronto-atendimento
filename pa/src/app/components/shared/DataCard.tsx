@@ -1,7 +1,7 @@
-import { Card } from "./ui/card";
-import { Badge } from "./ui/badge";
+import { Card } from "../ui/card";
+import { Badge } from "../ui/badge";
 import { Phone, Mail, Clock, Shield, Key } from "lucide-react";
-import { STATUS_COLORS, STATUS_LABELS } from "../constants";
+import { STATUS_COLORS, STATUS_LABELS } from "../../constants";
 
 export interface DataItem {
   id: string;
@@ -100,4 +100,4 @@ export function DataCard({ item, onClick }: DataCardProps) {
       </div>
     </Card>
   );
-}
+}export default DataCard; 

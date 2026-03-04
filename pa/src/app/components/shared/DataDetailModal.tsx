@@ -4,8 +4,8 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription,
-} from "./ui/dialog";
-import { Badge } from "./ui/badge";
+} from "../ui/dialog";
+import { Badge } from "../ui/badge";
 import {
   Phone,
   Mail,
@@ -19,10 +19,10 @@ import {
   AlertCircle,
   CheckCircle2,
 } from "lucide-react";
-import { DataItem } from "./data-card";
-import { Button } from "./ui/button";
-import { Separator } from "./ui/separator";
-import { STATUS_COLORS, STATUS_LABELS, DEFAULT_PORTAL_PASSWORD } from "../constants";
+import { DataItem } from "./DataCard";
+import { Button } from "../ui/button";
+import { Separator } from "../ui/separator";
+import { STATUS_COLORS, STATUS_LABELS, DEFAULT_PORTAL_PASSWORD } from "../../constants";
 
 interface DataDetailModalProps {
   item: DataItem | null;

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { db } from "../../lib/firebaseClient";
+import { db } from "../../../lib/firebaseClient";
 import { collection, getDocs, deleteDoc, doc, query, orderBy, addDoc } from "firebase/firestore";
 import { Button } from "../ui/button";
 import { Badge } from "../ui/badge";
